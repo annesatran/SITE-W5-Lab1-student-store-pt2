@@ -42,7 +42,6 @@ export default function Signup({ user, setUser }) {
     }
 
     setForm((f) => ({ ...f, [event.target.name]: event.target.value }))
-    console.log(form)
   }
 
   const handleOnSubmit = async () => {
@@ -64,7 +63,7 @@ export default function Signup({ user, setUser }) {
       //   email: form.email,
       //   password: form.password,
       // })
-      const {data, error} = await apiClient.signup({
+      const {data} = await apiClient.signup({
         name: form.name,
         username: form.username,
         email: form.email,

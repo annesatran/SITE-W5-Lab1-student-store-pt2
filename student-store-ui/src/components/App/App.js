@@ -36,7 +36,7 @@ export default function App() {
 
     try {
       // const res = await axios.post("http://localhost:3001/orders", { order: cart })
-      const {data, error} = apiClient.createNewOrder({ order: cart })
+      const {data} = apiClient.createNewOrder({ order: cart })
       if (data?.order) {
         setOrders((o) => [...data.order, ...o])
         setIsCheckingOut(false)
@@ -61,7 +61,7 @@ export default function App() {
 
       try {
         // const res = await axios.get("http://localhost:3001/store")
-        const {data, error} = await apiClient.fetchProducts()
+        const {data} = await apiClient.fetchProducts()
         if (data?.products) {
           setProducts(data.products)
         } else {
@@ -76,11 +76,11 @@ export default function App() {
       }
     }
     fetchProducts()
-  }, [])
+  }, [error])
 
 useEffect(() => {
     const fetchAuthedUser = async () => {
-      const { data, error } = await apiClient.fetchUserFromToken()
+      const { data } = await apiClient.fetchUserFromToken()
       if (data) {
         setUser(data.user)
         setError(null)
@@ -96,7 +96,7 @@ useEffect(() => {
         fetchAuthedUser()
     }
     setIsFetching(false)
-    }, [])
+    }, [error])
 
   return (
     <div className="App">

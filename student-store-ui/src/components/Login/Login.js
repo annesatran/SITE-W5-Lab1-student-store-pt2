@@ -39,7 +39,7 @@ export default function Login({ user, setUser }) {
 
     try {
       // const res = await axios.post("http://localhost:3001/auth/login", form)
-      const {data, error} = await apiClient.login(form)
+      const {data} = await apiClient.login(form)
       if (data?.user) {
         setUser(data.user)
       } else {

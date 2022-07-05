@@ -35,7 +35,8 @@ export default function Navbar( {user} ) {
           <li>
             <Link to="/#Buy">Buy Now</Link>
           </li>
-          {/* {user ? <li><button onClick={handleLogout}>Logout</button></li> : null } */}
+          {/* {user ? <li><button>Logout</button></li> : null } */}
+          {user ? <li><Link to="/">Logout</Link></li> : null }
         </ul>
       </div>
     </nav>
