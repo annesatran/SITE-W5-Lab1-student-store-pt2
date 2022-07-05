@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import axios from "axios"
+// import axios from "axios"
+import apiClient from "../../services/apiClient"
 import Home from "../Home/Home"
 import Signup from "../Signup/Signup"
 import Login from "../Login/Login"
@@ -34,12 +35,13 @@ export default function App() {
     setIsCheckingOut(true)
 
     try {
-      const res = await axios.post("http://localhost:3001/orders", { order: cart })
-      if (res?.data?.order) {
-        setOrders((o) => [...res.data.order, ...o])
+      // const res = await axios.post("http://localhost:3001/orders", { order: cart })
+      const {data, error} = apiClient.createNewOrder({ order: cart })
+      if (data?.order) {
+        setOrders((o) => [...data.order, ...o])
         setIsCheckingOut(false)
         setCart({})
-        return res.data.order
+        return data.order
       } else {
         setError("Error checking out.")
       }
@@ -52,14 +54,16 @@ export default function App() {
     }
   }
 
+
   useEffect(() => {
     const fetchProducts = async () => {
       setIsFetching(true)
 
       try {
-        const res = await axios.get("http://localhost:3001/store")
-        if (res?.data?.products) {
-          setProducts(res.data.products)
+        // const res = await axios.get("http://localhost:3001/store")
+        const {data, error} = await apiClient.fetchProducts()
+        if (data?.products) {
+          setProducts(data.products)
         } else {
           setError("Error fetching products.")
         }
@@ -71,9 +75,28 @@ export default function App() {
         setIsFetching(false)
       }
     }
-
     fetchProducts()
   }, [])
+
+useEffect(() => {
+    const fetchAuthedUser = async () => {
+      const { data, error } = await apiClient.fetchUserFromToken()
+      if (data) {
+        setUser(data.user)
+        setError(null)
+      }
+      if (error) setError(error)
+    }
+
+    const token = localStorage.getItem("student_store_token")
+    if (token) {
+        apiClient.setToken(token)
+        setIsFetching(true)
+        setError(null)
+        fetchAuthedUser()
+    }
+    setIsFetching(false)
+    }, [])
 
   return (
     <div className="App">

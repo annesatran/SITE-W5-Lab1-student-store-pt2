@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
-import axios from "axios"
+import apiClient from "../../services/apiClient"
+// import axios from "axios"
 import "./Signup.css"
 
 export default function Signup({ user, setUser }) {
@@ -57,14 +58,21 @@ export default function Signup({ user, setUser }) {
     }
 
     try {
-      const res = await axios.post("http://localhost:3001/auth/register", {
+      // const res = await axios.post("http://localhost:3001/auth/register", {
+      //   name: form.name,
+      //   username: form.username,
+      //   email: form.email,
+      //   password: form.password,
+      // })
+      const {data, error} = await apiClient.signup({
         name: form.name,
         username: form.username,
         email: form.email,
         password: form.password,
       })
-      if (res?.data?.user) {
-        setUser(res.data.user)
+
+      if (data?.user) {
+        setUser(data.user)
       } else {
         setErrors((e) => ({ ...e, form: "Something went wrong with registration" }))
       }
