@@ -34,7 +34,8 @@ export default function Home({
 
   return (
     <div className="Home">
-      <Navbar />
+      <Navbar 
+        user={user} />
       <SubNavbar
         user={user}
         activeCategory={activeCategory}

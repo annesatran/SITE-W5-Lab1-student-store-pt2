@@ -5,7 +5,12 @@ import Instagram from "../Icons/Instagram"
 import Facebook from "../Icons/Facebook"
 import "./Navbar.css"
 
-export default function Navbar() {
+export default function Navbar( {user} ) {
+
+  const handleLogout = () => {
+    console.log("logout")
+  }
+
   return (
     <nav className="Navbar">
       <div className="content">
@@ -34,6 +39,7 @@ export default function Navbar() {
           <li>
             <Link to="/#Buy">Buy Now</Link>
           </li>
+          {user ? <li><button onClick={handleLogout}>Logout</button></li> : null }
         </ul>
       </div>
     </nav>

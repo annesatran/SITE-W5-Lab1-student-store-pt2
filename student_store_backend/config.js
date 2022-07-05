@@ -19,6 +19,7 @@ function getDatabaseUri() {
 
 // Speed up bcrypt for tests when security isn't important
 const BCRYPT_WORK_FACTOR = IS_TESTING ? 4 : 13
+const SECRET_KEY = process.env.SECRET_KEY || "supersecretkey"
 
 console.log("Auth Starter Config:".red)
 console.log("PORT:".blue, PORT)
@@ -31,5 +32,6 @@ module.exports = {
   PORT,
   IS_TESTING,
   BCRYPT_WORK_FACTOR,
+  SECRET_KEY,
   getDatabaseUri,
 }
